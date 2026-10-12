@@ -3,17 +3,20 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import Testing from './components/Testing'
-import Login from './pages/login'
-
-
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <Login/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/*" element={<h2>404 not found</h2>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
