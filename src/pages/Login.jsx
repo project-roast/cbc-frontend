@@ -5,11 +5,33 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
     alert("Login button clicked!");
   }
+
+  /*for eye button funtion*/ 
+function EyeIcon({ visible }) {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+      {!visible && <path d="M3 3l18 18" />}
+    </svg>
+  );
+}
 
   return (
     <div className="min-h-screen bg-[#637aac] flex items-center justify-center p-4">
@@ -44,17 +66,35 @@ export default function Login() {
           ></input>
 
           {/* Password */}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => {
-                   setPassword(event.target.value);
-                   console.log("Password input:", event.target.value);
-                  }}
-            required
-            className="w-full border border-gray-300 rounded-md p-3 outline-none focus:border-blue-500"
-          ></input>
+         {/* Password */}
+<div className="relative mb-4">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onChange={(event) => {
+      const value = event.target.value;
+      setPassword(value);
+
+      console.log("Password characters:", value);
+    }}
+    required
+    className="w-full border border-gray-300 rounded-md p-3 pr-12 outline-none focus:border-blue-500"
+  />
+
+  <button
+    type="button"
+    onClick={() => {
+      const newValue = !showPassword;
+      setShowPassword(newValue);
+      console.log("Show Password:", newValue);
+    }}
+    aria-label={showPassword ? "Hide password" : "Show password"}
+    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 cursor-pointer"
+  >
+    <EyeIcon visible={showPassword} />
+  </button>
+</div>
 
           {/* Remember me */}
           <div className="flex items-center justify-between mt-4 mb-5">
@@ -90,7 +130,7 @@ export default function Login() {
             Login
           </button>
 
-          {/* Google button */}
+        
           
         </form>
       </div>
