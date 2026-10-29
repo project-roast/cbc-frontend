@@ -28,6 +28,7 @@ export default function Signup() {
     alert("Signup button clicked!");
   }
 
+/*for eye button funtion*/ 
 function EyeIcon({ visible }) {
   return (
     <svg
@@ -102,47 +103,63 @@ function EyeIcon({ visible }) {
             className="w-full border border-gray-300 rounded-md p-3 mb-4"
           />
 
-          
-{/* Password */}
-          
 {/* Password */}
 <div className="relative mb-4">
   <input
     type={showPassword ? "text" : "password"}
     placeholder="Password"
     value={password}
-    onChange={(event) => setPassword(event.target.value)}
+    onChange={(event) => {
+      const value = event.target.value;
+      setPassword(value);
+
+      console.log("Password characters:", value);
+    }}
     required
     className="w-full border border-gray-300 rounded-md p-3 pr-12 outline-none focus:border-blue-500"
   />
 
   <button
     type="button"
-    onClick={() => setShowPassword(!showPassword)}
+    onClick={() => {
+      const newValue = !showPassword;
+      setShowPassword(newValue);
+      console.log("Show Password:", newValue);
+    }}
     aria-label={showPassword ? "Hide password" : "Show password"}
     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 cursor-pointer"
   >
     <EyeIcon visible={showPassword} />
   </button>
 </div>
-
-
-
-          
+        
 {/* Confirm Password */}
-<div className="relative mb-5">
+<div className="relative mb-4">
   <input
     type={showConfirmPassword ? "text" : "password"}
     placeholder="Confirm password"
     value={confirmPassword}
-    onChange={(event) => setConfirmPassword(event.target.value)}
+    onChange={(event) => {
+      const value = event.target.value;
+      setConfirmPassword(value);
+
+      console.log("Confirm Password characters:", value);
+
+      if (value.length > 0) {
+        console.log("Passwords match:", value === password);
+      }
+    }}
     required
     className="w-full border border-gray-300 rounded-md p-3 pr-12 outline-none focus:border-blue-500"
   />
 
   <button
     type="button"
-    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    onClick={() => {
+      const newValue = !showConfirmPassword;
+      setShowConfirmPassword(newValue);
+      console.log("Show Confirm Password:", newValue);
+    }}
     aria-label={
       showConfirmPassword
         ? "Hide confirm password"
@@ -153,6 +170,20 @@ function EyeIcon({ visible }) {
     <EyeIcon visible={showConfirmPassword} />
   </button>
 </div>
+
+{/* Password Match Message */}
+{confirmPassword.length > 0 && (
+  <p className={`text-sm mb-4 ${
+    password === confirmPassword
+      ? "text-green-600"
+      : "text-red-500"
+  }`}>
+    {password === confirmPassword
+      ? "Passwords match"
+      : "Passwords do not match"}
+  </p>
+)}
+
 
           <button
             type="submit"
